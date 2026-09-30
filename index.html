@@ -882,7 +882,8 @@ if(!prefersReduced){
             <p style="font-size:13px; line-height:1.6; color:var(--muted); margin:14px 0 0; max-width:420px">${p.desc||''}</p>
             <div class="project-price">
               <span class="price-pill ${p.price.toLowerCase()==='free'?'price-free':''}">${p.price}</span>
-              <a class="link-arrow" href="${p.link}" target="_blank" rel="noopener" aria-label="Open">↗</a>
+              <a class="link-arrow" href="${p.link}" target="_blank" rel="noopener" aria-label="Open" title="Open Modal">↗</a>
+              <a href="${p.link}" target="_blank" rel="noopener" class="tag" style="margin-left:8px; background:var(--accent); color:#000; border-color:var(--accent); font-weight:700; text-decoration:none">Live Demo →</a>
               <span style="font-size:10px; letter-spacing:1.5px; text-transform:uppercase; opacity:.5; margin-left:8px">${p.category} • ${p.tags[0]}</span>
             </div>
           </div>
@@ -1073,6 +1074,25 @@ if(!prefersReduced){
     });
   }, 800);
 })();
+
+
+// Direct Live Demo fallback - make sure every project has working demo link
+setTimeout(()=>{
+  document.querySelectorAll('.project-wrap').forEach((wrap,i)=>{
+    const p = PROJECTS[i];
+    if(!p) return;
+    // add direct click on cover to open demo in new tab (not modal) on Ctrl/Cmd click or long press
+    const cover = wrap.querySelector('.project-cover-wrap');
+    if(cover){
+      cover.addEventListener('dblclick', (e)=>{
+        e.preventDefault();
+        window.open(p.link, '_blank');
+      });
+      // add title
+      cover.title = 'Click to view details — Double-click for Live Demo';
+    }
+  });
+}, 1000);
 
 // ================= NAV SMOOTH SCROLL =================
 $$('a[href^="#"]').forEach(a=>{
