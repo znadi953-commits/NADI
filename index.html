@@ -341,6 +341,39 @@ footer{padding:32px 24px; text-align:center; font-size:10px; letter-spacing:2px;
 /* UTIL */
 .reveal-mask{overflow:hidden}
 .reveal-mask span{display:block; transform:translateY(110%); will-change:transform}
+
+/* PROJECT MODAL - for selling */
+#projectModal{position:fixed; inset:0; z-index:200; display:none; place-items:center; padding:18px}
+#projectModal.active{display:grid}
+.modal-backdrop{position:absolute; inset:0; background:rgba(3,4,6,.88); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px)}
+.modal-box{
+  position:relative; width:min(980px, 96vw); max-height:90vh; overflow:auto;
+  background:linear-gradient(180deg, rgba(18,20,26,.96), rgba(7,8,11,.98));
+  border:1px solid var(--border); border-radius:20px; display:grid; grid-template-columns:1.2fr .8fr; gap:0;
+  box-shadow:0 30px 80px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.08);
+  animation:modalIn .5s var(--ease);
+}
+@keyframes modalIn{from{transform:translateY(20px) scale(.98); opacity:0} to{transform:translateY(0) scale(1); opacity:1}}
+.modal-img{position:relative; aspect-ratio:4/3; overflow:hidden; background:#0a0b0f; border-right:1px solid var(--border-2)}
+.modal-img img{width:100%; height:100%; object-fit:cover}
+.modal-img .corner-bracket{position:absolute; width:18px; height:18px; border-color:white; border-style:solid; opacity:.7}
+.modal-content{padding:24px 22px; display:flex; flex-direction:column; gap:14px}
+.modal-k{font-size:9px; letter-spacing:2px; text-transform:uppercase; opacity:.5}
+.modal-title{font-family:'Space Grotesk'; font-size:28px; line-height:.95; margin:0; text-transform:uppercase}
+.modal-desc{font-size:13px; line-height:1.6; color:var(--muted)}
+.modal-tags{display:flex; flex-wrap:wrap; gap:8px}
+.modal-price-row{display:flex; align-items:center; gap:12px; margin-top:8px; flex-wrap:wrap}
+.modal-price{font-size:22px; font-weight:800; letter-spacing:-.5px}
+.modal-includes{margin-top:12px; border-top:1px solid var(--border-2); padding-top:14px}
+.modal-includes h4{font-size:10px; letter-spacing:2px; text-transform:uppercase; opacity:.6; margin:0 0 10px}
+.modal-includes ul{list-style:none; padding:0; margin:0; display:grid; gap:6px}
+.modal-includes li{font-size:12px; display:flex; gap:8px; align-items:center; color:var(--muted)}
+.modal-includes li::before{content:'✓'; width:18px; height:18px; border-radius:50%; background:rgba(78,205,196,.15); border:1px solid rgba(78,205,196,.3); display:grid; place-items:center; font-size:10px; color:var(--accent)}
+.modal-cta{margin-top:auto; display:flex; gap:10px; flex-wrap:wrap}
+.modal-close{position:absolute; top:14px; right:14px; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.08); border:1px solid var(--border); display:grid; place-items:center; z-index:2; cursor:pointer}
+.modal-close:hover{background:white; color:black}
+@media (max-width:768px){.modal-box{grid-template-columns:1fr} .modal-img{aspect-ratio:16/10; border-right:0; border-bottom:1px solid var(--border-2)}}
+
 </style>
 </head>
 <body>
@@ -512,6 +545,45 @@ footer{padding:32px 24px; text-align:center; font-size:10px; letter-spacing:2px;
     </div>
     <footer>© 2024 NADI — Designing ideas that inspire — Built single-file, 60fps, HUD / tech-editorial</footer>
   </section>
+
+  <!-- PROJECT MODAL FOR SELLING -->
+  <div id="projectModal" aria-hidden="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <div class="modal-img">
+        <div class="corner-bracket cb-tl" style="top:12px; left:12px; border-width:1.5px 0 0 1.5px"></div>
+        <div class="corner-bracket cb-tr" style="top:12px; right:12px; border-width:1.5px 1.5px 0 0"></div>
+        <img id="modalImg" src="" alt="">
+      </div>
+      <div class="modal-content">
+        <div class="modal-k" id="modalCat">SaaS Dashboard // 01</div>
+        <h3 class="modal-title" id="modalTitle">ASTRA ANALYTICS</h3>
+        <p class="modal-desc" id="modalDesc">Real-time analytics platform...</p>
+        <div class="modal-tags" id="modalTags"></div>
+        <div class="modal-price-row">
+          <div class="modal-price" id="modalPrice">$8.5k</div>
+          <span style="font-size:10px; letter-spacing:1.5px; text-transform:uppercase; opacity:.5">One-time • Full source • Commercial license</span>
+        </div>
+        <div class="modal-includes">
+          <h4>What you get — ready to sell</h4>
+          <ul>
+            <li>Full Figma + Next.js source code (clean, commented)</li>
+            <li>Responsive, 60fps, dark/light, CMS ready</li>
+            <li>Deployment on Vercel + domain setup</li>
+            <li>7 days support + Loom walkthrough</li>
+            <li>Commercial license — resell to your clients</li>
+          </ul>
+        </div>
+        <div class="modal-cta">
+          <a class="btn-primary" id="modalBuy" href="#contact">Buy Now — WhatsApp ↗</a>
+          <button class="btn-ghost" id="modalDemo">Live Demo ↗</button>
+        </div>
+        <div style="font-size:10px; opacity:.4; letter-spacing:1px; text-transform:uppercase; margin-top:8px">Avg. delivery 5-7 days • Payment 50/50 • NDA friendly</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 </main>
 
@@ -916,6 +988,81 @@ if(!prefersReduced){
       gsap.to(item,{x:0, duration:0.4, ease:'power3.out'});
     });
   });
+})();
+
+
+// ================= PROJECT MODAL - SELLING =================
+(function modal(){
+  const modalEl = $('#projectModal');
+  const backdrop = $('#modalBackdrop');
+  const closeBtn = $('#modalClose');
+  const img = $('#modalImg');
+  const cat = $('#modalCat');
+  const title = $('#modalTitle');
+  const desc = $('#modalDesc');
+  const tags = $('#modalTags');
+  const price = $('#modalPrice');
+  const buy = $('#modalBuy');
+  const demo = $('#modalDemo');
+
+  function openProject(idx){
+    const p = PROJECTS[idx];
+    if(!p) return;
+    img.src = p.image;
+    cat.textContent = `${String(idx+1).padStart(2,'0')} // ${p.category}`;
+    title.textContent = p.name;
+    desc.textContent = p.desc || '';
+    price.textContent = p.price;
+    tags.innerHTML = p.tags.map(t=>`<span class="tag">${t}</span>`).join('');
+    buy.href = `https://wa.me/212600000000?text=Salam%20NADI%2C%20bghit%20nshri%20projet%20${encodeURIComponent(p.name)}%20${p.price}`;
+    demo.onclick = ()=>{ if(p.link && p.link!=='#') window.open(p.link,'_blank'); else { lenis?lenis.scrollTo('#contact'):document.querySelector('#contact').scrollIntoView({behavior:'smooth'}); closeModal(); } };
+    modalEl.classList.add('active');
+    modalEl.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    if(lenis) lenis.stop();
+    gsap.fromTo('.modal-box',{y:20, scale:.98, opacity:0},{y:0, scale:1, opacity:1, duration:.5, ease:'power3.out'});
+  }
+  function closeModal(){
+    gsap.to('.modal-box',{y:10, scale:.98, opacity:0, duration:.3, ease:'power2.in', onComplete:()=>{
+      modalEl.classList.remove('active');
+      modalEl.setAttribute('aria-hidden','true');
+      document.body.style.overflow='';
+      if(lenis) lenis.start();
+    }});
+  }
+  window.openProject = openProject;
+  window.closeModal = closeModal;
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  window.addEventListener('keydown', e=>{ if(e.key==='Escape' && modalEl.classList.contains('active')) closeModal(); });
+
+  // attach click to covers after they are generated
+  const observer = new MutationObserver(()=>{
+    $$('.project-cover-wrap, .link-arrow').forEach((el, idx)=>{
+      // use closest project index
+      const wrap = el.closest('.project-wrap');
+      if(!wrap) return;
+      const i = parseInt(wrap.id.split('-')[1]||0);
+      el.style.cursor='pointer';
+      el.addEventListener('click', (e)=>{
+        e.preventDefault();
+        openProject(i);
+      });
+    });
+  });
+  observer.observe(document.querySelector('#projects'), {childList:true, subtree:true});
+  // also initial after 1s
+  setTimeout(()=>{
+    $$('.project-wrap').forEach((wrap,i)=>{
+      const cover = wrap.querySelector('.project-cover-wrap');
+      const arrow = wrap.querySelector('.link-arrow');
+      [cover, arrow].forEach(el=>{
+        if(!el) return;
+        el.style.cursor='pointer';
+        el.addEventListener('click', e=>{ e.preventDefault(); openProject(i); });
+      });
+    });
+  }, 800);
 })();
 
 // ================= NAV SMOOTH SCROLL =================
