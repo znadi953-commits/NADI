@@ -926,7 +926,7 @@ if(!prefersReduced){
             <div class="project-price">
               <span class="price-pill ${p.price.toLowerCase()==='free'?'price-free':''}">${p.price}</span>
               <a class="link-arrow" href="${p.link}" rel="noopener" aria-label="Open" title="Open Modal">↗</a>
-              <a href="${p.link}" onclick="event.preventDefault(); openDemoViewer(0); return false;" data-idx="${i}" class="tag demo-trigger" style="margin-left:8px; background:var(--accent); color:#000; border-color:var(--accent); font-weight:700; text-decoration:none">Live Demo →</a>
+              <a href="${p.link}" onclick="event.preventDefault(); openDemoViewer(${i}); return false;" data-idx="${i}" class="tag demo-trigger" style="margin-left:8px; background:var(--accent); color:#000; border-color:var(--accent); font-weight:700; text-decoration:none">Live Demo →</a>
               <span style="font-size:10px; letter-spacing:1.5px; text-transform:uppercase; opacity:.5; margin-left:8px">${p.category} • ${p.tags[0]}</span>
             </div>
           </div>
@@ -1142,35 +1142,6 @@ setTimeout(()=>{
 }, 1000);
 
 
-
-// DEMO VIEWER - inline, no navigation, fixes e2b token & sbx DNS issues
-function openDemoViewer(idx){
-  const p = PROJECTS[idx];
-  if(!p) return;
-  const viewer = document.getElementById('demoViewer');
-  document.getElementById('demoViewerImg').src = p.image;
-  document.getElementById('demoViewerBadge').textContent = `Live Demo • ${p.category} • ${p.price}`;
-  const parts = p.name.split(' ');
-  document.getElementById('demoViewerTitle').innerHTML = `${parts[0]} <span style="-webkit-text-stroke:1px rgba(255,255,255,.6); color:transparent">${parts.slice(1).join(' ')}</span>`;
-  document.getElementById('demoViewerDesc').textContent = p.desc || '';
-  document.getElementById('demoViewerBuy').textContent = `Buy this template ${p.price} ↗`;
-  document.getElementById('demoViewerBuy').href = `https://wa.me/212600000000?text=Salam%20NADI%2C%20bghit%20nshri%20${encodeURIComponent(p.name)}%20${p.price}`;
-  document.getElementById('demoUrl').textContent = `nadi.studio/demo/${p.name.toLowerCase().replace(/\s+/g,'-')}`;
-  viewer.classList.add('active');
-  viewer.setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
-  if(window.lenis) lenis.stop();
-  window.scrollTo(0,0);
-  viewer.scrollTop = 0;
-}
-function closeDemoViewer(){
-  document.getElementById('demoViewer').classList.remove('active');
-  document.getElementById('demoViewer').setAttribute('aria-hidden','true');
-  document.body.style.overflow='';
-  if(window.lenis) lenis.start();
-}
-document.getElementById('demoClose')?.addEventListener('click', closeDemoViewer);
-window.addEventListener('keydown', e=>{ if(e.key==='Escape' && document.getElementById('demoViewer').classList.contains('active')) closeDemoViewer(); });
 window.openDemoViewer = openDemoViewer;
 
 // Fix Arena sbx links -> e2b
