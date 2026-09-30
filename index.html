@@ -577,7 +577,7 @@ footer{padding:32px 24px; text-align:center; font-size:10px; letter-spacing:2px;
         </div>
         <div class="modal-cta">
           <a class="btn-primary" id="modalBuy" href="#contact">Buy Now — WhatsApp ↗</a>
-          <button class="btn-ghost" id="modalDemo">Live Demo ↗</button>
+          <a class="btn-ghost" id="modalDemo" href="#" target="_blank" rel="noopener">Live Demo ↗</a>
         </div>
         <div style="font-size:10px; opacity:.4; letter-spacing:1px; text-transform:uppercase; margin-top:8px">Avg. delivery 5-7 days • Payment 50/50 • NDA friendly</div>
       </div>
@@ -1015,7 +1015,16 @@ if(!prefersReduced){
     price.textContent = p.price;
     tags.innerHTML = p.tags.map(t=>`<span class="tag">${t}</span>`).join('');
     buy.href = `https://wa.me/212600000000?text=Salam%20NADI%2C%20bghit%20nshri%20projet%20${encodeURIComponent(p.name)}%20${p.price}`;
-    demo.onclick = ()=>{ if(p.link && p.link!=='#') window.open(p.link,'_blank'); else { lenis?lenis.scrollTo('#contact'):document.querySelector('#contact').scrollIntoView({behavior:'smooth'}); closeModal(); } };
+    if(p.link && p.link!=='#'){
+      demo.href = p.link;
+      demo.target = '_blank';
+      demo.rel = 'noopener';
+      demo.onclick = null;
+    } else {
+      demo.href = '#contact';
+      demo.target = '';
+      demo.onclick = (e)=>{ e.preventDefault(); lenis?lenis.scrollTo('#contact'):document.querySelector('#contact').scrollIntoView({behavior:'smooth'}); closeModal(); };
+    }
     modalEl.classList.add('active');
     modalEl.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
