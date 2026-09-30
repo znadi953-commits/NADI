@@ -374,6 +374,20 @@ footer{padding:32px 24px; text-align:center; font-size:10px; letter-spacing:2px;
 .modal-close:hover{background:white; color:black}
 @media (max-width:768px){.modal-box{grid-template-columns:1fr} .modal-img{aspect-ratio:16/10; border-right:0; border-bottom:1px solid var(--border-2)}}
 
+
+/* DEMO VIEWER - inline live demo without navigation, fixes e2b token issue */
+#demoViewer{position:fixed; inset:0; z-index:300; display:none; background:var(--bg); overflow:auto}
+#demoViewer.active{display:block}
+.demo-browser{position:relative; min-height:100vh; background:var(--bg)}
+.demo-topbar{position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; padding:12px 18px; background:rgba(16,18,24,.9); backdrop-filter:blur(14px); border-bottom:1px solid var(--border)}
+.demo-topbar .dots{display:flex; gap:6px}
+.demo-topbar .dots span{width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.2); display:block}
+.demo-topbar .dots span:nth-child(1){background:#ff5f56} .dots span:nth-child(2){background:#ffbd2e} .dots span:nth-child(3){background:#27c93f}
+.demo-hero{position:relative; min-height:88vh; display:grid; place-items:center; text-align:center; padding:80px 24px; overflow:hidden}
+.demo-hero img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.35}
+.demo-hero::after{content:''; position:absolute; inset:0; background:radial-gradient(60% 60% at 50% 40%, transparent, var(--bg) 85%)}
+.demo-hero-content{position:relative; z-index:2; max-width:800px}
+
 </style>
 </head>
 <body>
@@ -545,6 +559,35 @@ footer{padding:32px 24px; text-align:center; font-size:10px; letter-spacing:2px;
     </div>
     <footer>© 2024 NADI — Designing ideas that inspire — Built single-file, 60fps, HUD / tech-editorial</footer>
   </section>
+
+
+  <!-- DEMO VIEWER - inline, no navigation, fixes token issue -->
+  <div id="demoViewer" aria-hidden="true">
+    <div class="demo-browser">
+      <div class="demo-topbar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div style="font-size:11px; opacity:.6; letter-spacing:1px" id="demoUrl">nadi.studio/demo</div>
+        <button class="btn-ghost" id="demoClose" style="padding:8px 14px; font-size:11px">✕ Close Demo</button>
+      </div>
+      <div class="demo-hero">
+        <img id="demoViewerImg" src="" alt="">
+        <div class="demo-hero-content">
+          <div class="badge" id="demoViewerBadge" style="font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.06);display:inline-block;margin-bottom:16px">Live Demo • SaaS</div>
+          <h1 id="demoViewerTitle" style="font-family:Space Grotesk; font-size:clamp(36px,7vw,84px); line-height:.9; letter-spacing:-2px; margin:0; text-transform:uppercase">ASTRA <span style="-webkit-text-stroke:1px rgba(255,255,255,.6); color:transparent">ANALYTICS</span></h1>
+          <p id="demoViewerDesc" style="color:rgba(255,255,255,.6); font-size:16px; line-height:1.6; margin:18px auto; max-width:520px">Real-time analytics platform...</p>
+          <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:24px">
+            <a class="btn-primary" id="demoViewerBuy" href="#contact">Buy this template $8.5k ↗</a>
+            <button class="btn-ghost" onclick="document.getElementById('demoViewer').classList.remove('active'); document.body.style.overflow=''; if(window.lenis) lenis.start();">← Back to portfolio</button>
+          </div>
+        </div>
+      </div>
+      <div style="max-width:1100px; margin:0 auto; padding:40px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px">
+        <div class="card" style="padding:18px; border-radius:14px; background:rgba(255,255,255,.04); border:1px solid var(--border)"><h3 style="font-family:Space Grotesk; margin:0 0 6px">⚡ Performance</h3><p style="color:rgba(255,255,255,.6); font-size:13px">0.8s LCP, 100 Lighthouse, 60fps scroll</p></div>
+        <div class="card" style="padding:18px; border-radius:14px; background:rgba(255,255,255,.04); border:1px solid var(--border)"><h3 style="font-family:Space Grotesk; margin:0 0 6px">🎨 Design System</h3><p style="color:rgba(255,255,255,.6); font-size:13px">Figma + tokens, glassmorphism, HUD</p></div>
+        <div class="card" style="padding:18px; border-radius:14px; background:rgba(255,255,255,.04); border:1px solid var(--border)"><h3 style="font-family:Space Grotesk; margin:0 0 6px">💼 Commercial License</h3><p style="color:rgba(255,255,255,.6); font-size:13px">Resell to clients, white-label, full source</p></div>
+      </div>
+    </div>
+  </div>
 
   <!-- PROJECT MODAL FOR SELLING -->
   <div id="projectModal" aria-hidden="true">
@@ -883,7 +926,7 @@ if(!prefersReduced){
             <div class="project-price">
               <span class="price-pill ${p.price.toLowerCase()==='free'?'price-free':''}">${p.price}</span>
               <a class="link-arrow" href="${p.link}" rel="noopener" aria-label="Open" title="Open Modal">↗</a>
-              <a href="${p.link}" class="tag" style="margin-left:8px; background:var(--accent); color:#000; border-color:var(--accent); font-weight:700; text-decoration:none">Live Demo →</a>
+              <a href="${p.link}" onclick="event.preventDefault(); openDemoViewer(0); return false;" data-idx="${i}" class="tag demo-trigger" style="margin-left:8px; background:var(--accent); color:#000; border-color:var(--accent); font-weight:700; text-decoration:none">Live Demo →</a>
               <span style="font-size:10px; letter-spacing:1.5px; text-transform:uppercase; opacity:.5; margin-left:8px">${p.category} • ${p.tags[0]}</span>
             </div>
           </div>
@@ -1017,18 +1060,13 @@ if(!prefersReduced){
     tags.innerHTML = p.tags.map(t=>`<span class="tag">${t}</span>`).join('');
     buy.href = `https://wa.me/212600000000?text=Salam%20NADI%2C%20bghit%20nshri%20projet%20${encodeURIComponent(p.name)}%20${p.price}`;
     if(p.link && p.link!=='#'){
-      demo.href = p.link;
-      demo.target = '_self';
+      demo.href = '#';
+      demo.target = '';
       demo.rel = '';
       demo.onclick = (e)=>{
         e.preventDefault();
-        // force e2b URL
-        let url = p.link;
-        if(url.includes('sbx-') || url.includes('arena.site')){
-          const m = url.match(/\/demos\/([^?]+)/);
-          if(m) url = 'https://8000-i0wmryhx23rl9hlzrgyp5.e2b.app/demos/' + m[1];
-        }
-        window.location.href = url;
+        closeModal();
+        setTimeout(()=>openDemoViewer(idx), 300);
       };
     } else {
       demo.href = '#contact';
@@ -1103,6 +1141,37 @@ setTimeout(()=>{
   });
 }, 1000);
 
+
+
+// DEMO VIEWER - inline, no navigation, fixes e2b token & sbx DNS issues
+function openDemoViewer(idx){
+  const p = PROJECTS[idx];
+  if(!p) return;
+  const viewer = document.getElementById('demoViewer');
+  document.getElementById('demoViewerImg').src = p.image;
+  document.getElementById('demoViewerBadge').textContent = `Live Demo • ${p.category} • ${p.price}`;
+  const parts = p.name.split(' ');
+  document.getElementById('demoViewerTitle').innerHTML = `${parts[0]} <span style="-webkit-text-stroke:1px rgba(255,255,255,.6); color:transparent">${parts.slice(1).join(' ')}</span>`;
+  document.getElementById('demoViewerDesc').textContent = p.desc || '';
+  document.getElementById('demoViewerBuy').textContent = `Buy this template ${p.price} ↗`;
+  document.getElementById('demoViewerBuy').href = `https://wa.me/212600000000?text=Salam%20NADI%2C%20bghit%20nshri%20${encodeURIComponent(p.name)}%20${p.price}`;
+  document.getElementById('demoUrl').textContent = `nadi.studio/demo/${p.name.toLowerCase().replace(/\s+/g,'-')}`;
+  viewer.classList.add('active');
+  viewer.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  if(window.lenis) lenis.stop();
+  window.scrollTo(0,0);
+  viewer.scrollTop = 0;
+}
+function closeDemoViewer(){
+  document.getElementById('demoViewer').classList.remove('active');
+  document.getElementById('demoViewer').setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+  if(window.lenis) lenis.start();
+}
+document.getElementById('demoClose')?.addEventListener('click', closeDemoViewer);
+window.addEventListener('keydown', e=>{ if(e.key==='Escape' && document.getElementById('demoViewer').classList.contains('active')) closeDemoViewer(); });
+window.openDemoViewer = openDemoViewer;
 
 // Fix Arena sbx links -> e2b
 (function fixArenaLinks(){
