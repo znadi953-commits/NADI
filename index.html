@@ -1230,14 +1230,19 @@ const DEMO_TEMPLATES = {
   4: (p)=>`<div style="min-height:92vh; background:#07080b; color:#fff; padding:24px"><h2>NEURAL LAB • AI Platform</h2><img src="${p.image}" style="max-width:600px; border-radius:14px; margin-top:12px"><div style="margin-top:18px; display:flex; gap:10px"><a href="https://wa.me/212600000000?text=Buy%20NEURAL" target="_blank" style="padding:12px 20px; border-radius:999px; background:#fff; color:#000; font-weight:700; text-decoration:none">Buy</a><button onclick="closeDemoViewer()">Back</button></div></div>`,
   5: (p)=>`<div style="min-height:92vh; background:#07080b; color:#fff; padding:24px"><h2>NADI STUDIO • Portfolio</h2><img src="${p.image}" style="max-width:600px; border-radius:14px; margin-top:12px"><div style="margin-top:18px; display:flex; gap:10px"><a href="https://wa.me/212600000000?text=Buy%20NADI" target="_blank" style="padding:12px 20px; border-radius:999px; background:#fff; color:#000; font-weight:700; text-decoration:none">Buy</a><button onclick="closeDemoViewer()">Back</button></div></div>`
 };
+
 function openDemoViewer(idx){
   const p = PROJECTS[idx];
   if(!p) return;
   const viewer = document.getElementById('demoViewer');
   const container = document.getElementById('demoFunctional');
   if(!viewer || !container){ console.log('viewer not found'); return; }
+  let imgSrc = p.image;
+  const domImg = document.querySelector(`#project-${idx} .project-cover`);
+  if(domImg && domImg.src) imgSrc = domImg.src;
+  const pWithImg = {...p, image: imgSrc};
   const fn = DEMO_TEMPLATES[idx] || DEMO_TEMPLATES[0];
-  container.innerHTML = fn(p);
+  container.innerHTML = fn(pWithImg);
   const urlEl = document.getElementById('demoUrl');
   if(urlEl) urlEl.textContent = 'nadi.studio/demo/' + p.name.toLowerCase().replace(/\s+/g,'-') + ' • LIVE • Client view - site khdam mzn';
   viewer.classList.add('active');
@@ -1247,8 +1252,9 @@ function openDemoViewer(idx){
   window.scrollTo(0,0);
   viewer.scrollTop = 0;
   if(window.gsap) gsap.fromTo(container, {y:20, opacity:0}, {y:0, opacity:1, duration:0.5, ease:'power3.out'});
-  console.log('Demo opened', p.name);
+  console.log('Demo opened', p.name, 'img len', imgSrc ? imgSrc.length : 0);
 }
+
 function closeDemoViewer(){
   const v = document.getElementById('demoViewer');
   if(!v) return;
