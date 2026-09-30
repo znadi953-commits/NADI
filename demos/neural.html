@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEURAL LAB — Live Demo | NADI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07080b;--accent:#a78bfa;--border:rgba(255,255,255,.14)}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:#fff;font-family:Inter,sans-serif}
+.navbar{position:fixed;top:14px;left:50%;transform:translateX(-50%);width:min(1100px,92vw);display:flex;justify-content:space-between;align-items:center;padding:10px 18px;background:rgba(16,18,24,.8);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:999px;z-index:10}
+.hero{min-height:92vh;display:grid;place-items:center;padding:100px 24px 40px;text-align:center;position:relative;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35;}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 40%, transparent, var(--bg) 80%)}
+.hero-content{position:relative;z-index:2;max-width:800px}
+.badge{font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.06);display:inline-block;margin-bottom:16px}
+h1{font-family:Space Grotesk;font-size:clamp(36px,7vw,84px);line-height:.9;letter-spacing:-2px;margin:0;text-transform:uppercase}
+h1 span{ -webkit-text-stroke:1px rgba(255,255,255,.6); color:transparent}
+.desc{color:rgba(255,255,255,.6);font-size:16px;line-height:1.6;margin:18px auto;max-width:520px}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.btn{padding:14px 22px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.btn-p{background:#fff;color:#000} .btn-p:hover{background:var(--accent)}
+.btn-g{border:1px solid var(--border);background:rgba(255,255,255,.06);color:#fff}
+.grid{max-width:1100px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{padding:18px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--border)}
+.card h3{font-family:Space Grotesk;margin:0 0 6px;font-size:16px} .card p{margin:0;color:rgba(255,255,255,.6);font-size:13px;line-height:1.5}
+.footer{padding:40px;text-align:center;opacity:.4;font-size:10px;letter-spacing:2px;text-transform:uppercase}
+@media(max-width:768px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<div class="navbar"><div style="font-family:Space Grotesk;font-weight:700">NADI. <span style="color:var(--accent)">AI Platform</span></div><a href="../index.html" style="color:#fff;text-decoration:none;font-size:11px;letter-spacing:1px;opacity:.7">← Back to portfolio</a></div>
+<section class="hero"><img src="../proj5.jpg" alt="NEURAL LAB"><div class="hero-content"><div class="badge">Live Demo • AI Platform • $11k</div><h1>NEURAL <span>LAB</span></h1><p class="desc">AI workspace for teams — Built with Next.js 14, GSAP + Lenis, 60fps, fully responsive, dark/light mode, CMS ready. This is a live functional demo you can sell to clients.</p><div class="cta"><a class="btn btn-p" href="https://wa.me/212600000000?text=Salam%20NADI%2C%20bghit%20nshri%20NEURAL%20LAB%20$11k">Buy this template $11k ↗</a><a class="btn btn-g" href="../index.html">← Back</a></div></div></section>
+<section class="grid"><div class="card"><h3>⚡ Performance</h3><p>0.8s LCP, 100 Lighthouse, edge functions, 60fps scroll. No jank.</p></div><div class="card"><h3>🎨 Design System</h3><p>Figma + tokens, glassmorphism, HUD lines, Space Grotesk + Inter.</p></div><div class="card"><h3>🛠️ Stack</h3><p>Next.js 14, Tailwind, GSAP, Lenis, Vercel deploy, CMS ready.</p></div><div class="card"><h3>📱 Responsive</h3><p>Mobile-first, touch gestures, reduced-motion fallback, lazy media.</p></div><div class="card"><h3>🔒 Secure & Fast</h3><p>PCI-DSS ready, 99.99% uptime, CDN, image optimization.</p></div><div class="card"><h3>💼 Commercial License</h3><p>Resell to your clients, white-label, full source, 7 days support.</p></div></section>
+<div class="footer">© 2024 NADI — NEURAL LAB Live Demo — Ready to sell</div>
+</body></html>
