@@ -882,8 +882,8 @@ if(!prefersReduced){
             <p style="font-size:13px; line-height:1.6; color:var(--muted); margin:14px 0 0; max-width:420px">${p.desc||''}</p>
             <div class="project-price">
               <span class="price-pill ${p.price.toLowerCase()==='free'?'price-free':''}">${p.price}</span>
-              <a class="link-arrow" href="${p.link}" target="_blank" rel="noopener" aria-label="Open" title="Open Modal">↗</a>
-              <a href="${p.link}" target="_blank" rel="noopener" class="tag" style="margin-left:8px; background:var(--accent); color:#000; border-color:var(--accent); font-weight:700; text-decoration:none">Live Demo →</a>
+              <a class="link-arrow" href="${p.link}" rel="noopener" aria-label="Open" title="Open Modal">↗</a>
+              <a href="${p.link}" class="tag" style="margin-left:8px; background:var(--accent); color:#000; border-color:var(--accent); font-weight:700; text-decoration:none">Live Demo →</a>
               <span style="font-size:10px; letter-spacing:1.5px; text-transform:uppercase; opacity:.5; margin-left:8px">${p.category} • ${p.tags[0]}</span>
             </div>
           </div>
@@ -1018,8 +1018,8 @@ if(!prefersReduced){
     buy.href = `https://wa.me/212600000000?text=Salam%20NADI%2C%20bghit%20nshri%20projet%20${encodeURIComponent(p.name)}%20${p.price}`;
     if(p.link && p.link!=='#'){
       demo.href = p.link;
-      demo.target = '_blank';
-      demo.rel = 'noopener';
+      demo.target = '_self';
+      demo.rel = '';
       demo.onclick = null;
     } else {
       demo.href = '#contact';
