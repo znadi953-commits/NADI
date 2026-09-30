@@ -1219,5 +1219,58 @@ window.addEventListener('load',()=>{ ScrollTrigger.refresh(); });
 let resizeTO;
 window.addEventListener('resize',()=>{ clearTimeout(resizeTO); resizeTO=setTimeout(()=>ScrollTrigger.refresh(),200); });
 </script>
+
+<script>
+// === FUNCTIONAL DEMO VIEWER - OVERRIDE - client sees real working site ===
+const DEMO_TEMPLATES = {
+  0: (p)=>`<div style="min-height:92vh; background:#07080b; color:#fff; font-family:Inter"><div style="max-width:1200px; margin:0 auto; padding:24px; display:grid; grid-template-columns:220px 1fr; gap:18px"><div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:16px"><div style="font-family:Space Grotesk; font-weight:700; margin-bottom:18px">ASTRA.</div><div style="display:grid; gap:8px; font-size:13px; opacity:.7"><div style="background:rgba(78,205,196,.15); padding:8px 12px; border-radius:8px; color:#4ecdc4">Dashboard</div><div style="padding:8px 12px">Analytics</div><div style="padding:8px 12px">Users</div></div></div><div><div style="display:flex; justify-content:space-between; margin-bottom:18px"><h2 style="font-family:Space Grotesk; font-size:24px; margin:0">Analytics Overview</h2><div style="font-size:11px; padding:6px 12px; border-radius:999px; background:#2dff8a; color:#000; font-weight:700">Live - 50k users</div></div><div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:18px"><div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:16px"><div style="font-size:10px; opacity:.5">REVENUE</div><div style="font-size:22px; font-weight:700; margin-top:4px">$124.5k</div><div style="font-size:11px; color:#2dff8a">Up 12.4%</div></div><div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:16px"><div style="font-size:10px; opacity:.5">USERS</div><div style="font-size:22px; font-weight:700; margin-top:4px">12,420</div></div><div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:16px"><div style="font-size:10px; opacity:.5">CONVERSION</div><div style="font-size:22px; font-weight:700; margin-top:4px">3.24%</div></div></div><div style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:16px; height:220px; display:grid; place-items:center"><div style="display:flex; gap:4px; align-items:end; height:100px"><div style="width:18px; height:40%; background:#4ecdc4; border-radius:4px"></div><div style="width:18px; height:70%; background:#4ecdc4; border-radius:4px"></div><div style="width:18px; height:90%; background:#fff; border-radius:4px"></div><div style="width:18px; height:65%; background:#4ecdc4; border-radius:4px"></div></div></div></div></div><div style="max-width:1200px; margin:0 auto; padding:0 24px 24px; display:flex; gap:10px"><a href="https://wa.me/212600000000?text=Buy%20ASTRA" target="_blank" style="padding:12px 20px; border-radius:999px; background:#fff; color:#000; font-weight:700; font-size:12px; text-decoration:none">Buy Template</a><button onclick="closeDemoViewer()" style="padding:12px 20px; border-radius:999px; background:transparent; color:#fff; border:1px solid rgba(255,255,255,.2)">Back</button></div></div>`,
+  1: (p)=>`<div style="min-height:92vh; background:#0a0a0b; color:#fff; padding:24px; text-align:center"><h1 style="font-family:Space Grotesk; font-size:48px">LUXE COMMERCE</h1><p style="opacity:.6">Luxury e-commerce • 0.8s LCP • +127% conversion</p><img src="${p.image}" style="max-width:700px; width:100%; border-radius:18px; margin-top:18px"><div style="margin-top:18px; display:flex; gap:10px; justify-content:center"><a href="https://wa.me/212600000000?text=Buy%20LUXE" target="_blank" style="padding:12px 20px; border-radius:999px; background:#fff; color:#000; font-weight:700; text-decoration:none">Buy Template</a><button onclick="closeDemoViewer()" style="padding:12px 20px; border-radius:999px; background:transparent; color:#fff; border:1px solid rgba(255,255,255,.2)">Back</button></div></div>`,
+  2: (p)=>`<div style="min-height:92vh; background:#07080b; color:#fff; padding:24px"><h2 style="font-family:Space Grotesk">DOMUS ESTATE • $1.2M Villa</h2><p style="opacity:.6">Mapbox GL • 10k listings • 360° Tour</p><img src="${p.image}" style="max-width:700px; width:100%; border-radius:14px; margin-top:12px"><div style="margin-top:18px; display:flex; gap:10px"><a href="https://wa.me/212600000000?text=Buy%20DOMUS" target="_blank" style="padding:12px 20px; border-radius:999px; background:#fff; color:#000; font-weight:700; text-decoration:none">Buy</a><button onclick="closeDemoViewer()">Back</button></div></div>`,
+  3: (p)=>`<div style="min-height:92vh; background:#05070a; color:#fff; padding:24px"><h2>NOVA BANK • $24,580 • Real-time</h2><p>PCI-DSS • Biometric • 99.99% uptime</p><div style="background:linear-gradient(135deg,#4ecdc4,#2d8a84); border-radius:18px; padding:22px; color:#000; max-width:400px; margin-top:12px"><div>$24,580.00</div></div><div style="margin-top:18px; display:flex; gap:10px"><a href="https://wa.me/212600000000?text=Buy%20NOVA" target="_blank" style="padding:12px 20px; border-radius:999px; background:#fff; color:#000; font-weight:700; text-decoration:none">Buy</a><button onclick="closeDemoViewer()">Back</button></div></div>`,
+  4: (p)=>`<div style="min-height:92vh; background:#07080b; color:#fff; padding:24px"><h2>NEURAL LAB • AI Platform</h2><img src="${p.image}" style="max-width:600px; border-radius:14px; margin-top:12px"><div style="margin-top:18px; display:flex; gap:10px"><a href="https://wa.me/212600000000?text=Buy%20NEURAL" target="_blank" style="padding:12px 20px; border-radius:999px; background:#fff; color:#000; font-weight:700; text-decoration:none">Buy</a><button onclick="closeDemoViewer()">Back</button></div></div>`,
+  5: (p)=>`<div style="min-height:92vh; background:#07080b; color:#fff; padding:24px"><h2>NADI STUDIO • Portfolio</h2><img src="${p.image}" style="max-width:600px; border-radius:14px; margin-top:12px"><div style="margin-top:18px; display:flex; gap:10px"><a href="https://wa.me/212600000000?text=Buy%20NADI" target="_blank" style="padding:12px 20px; border-radius:999px; background:#fff; color:#000; font-weight:700; text-decoration:none">Buy</a><button onclick="closeDemoViewer()">Back</button></div></div>`
+};
+function openDemoViewer(idx){
+  const p = PROJECTS[idx];
+  if(!p) return;
+  const viewer = document.getElementById('demoViewer');
+  const container = document.getElementById('demoFunctional');
+  if(!viewer || !container){ console.log('viewer not found'); return; }
+  const fn = DEMO_TEMPLATES[idx] || DEMO_TEMPLATES[0];
+  container.innerHTML = fn(p);
+  const urlEl = document.getElementById('demoUrl');
+  if(urlEl) urlEl.textContent = 'nadi.studio/demo/' + p.name.toLowerCase().replace(/\s+/g,'-') + ' • LIVE • Client view - site khdam mzn';
+  viewer.classList.add('active');
+  viewer.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  if(window.lenis) lenis.stop();
+  window.scrollTo(0,0);
+  viewer.scrollTop = 0;
+  if(window.gsap) gsap.fromTo(container, {y:20, opacity:0}, {y:0, opacity:1, duration:0.5, ease:'power3.out'});
+  console.log('Demo opened', p.name);
+}
+function closeDemoViewer(){
+  const v = document.getElementById('demoViewer');
+  if(!v) return;
+  v.classList.remove('active');
+  v.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+  if(window.lenis) lenis.start();
+}
+window.openDemoViewer = openDemoViewer;
+window.closeDemoViewer = closeDemoViewer;
+document.getElementById('demoClose')?.addEventListener('click', closeDemoViewer);
+window.addEventListener('keydown', e=>{ if(e.key==='Escape' && document.getElementById('demoViewer')?.classList.contains('active')) closeDemoViewer(); });
+// Fix all Live Demo buttons to use correct idx
+setTimeout(()=>{
+  document.querySelectorAll('.project-wrap').forEach((wrap,i)=>{
+    const btn = wrap.querySelector('.demo-trigger');
+    if(btn){
+      btn.setAttribute('onclick', `event.preventDefault(); openDemoViewer(${i}); return false;`);
+    }
+  });
+}, 800);
+</script>
+
 </body>
 </html>
